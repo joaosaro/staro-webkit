@@ -59,9 +59,9 @@ gulp.task('del', function(done) {
 gulp.task('tinypng', function () {
 	gulp.src(src + 'assets/img/**/*.{png,jpg,jpeg}')
 		.pipe(tinypng({
-      key: //Your Tiny png account key,
 			sigFile: 'images/.tinypng-sigs',
 			log: true
+      key: //Your Tiny png account key
 		}))
 		.pipe(gulp.dest(src + 'assets/min/img/'));
 });
