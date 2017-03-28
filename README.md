@@ -26,3 +26,9 @@ gulp
 </code>
 
 I choose "_dev" for development folder. If you want to change, remember to change the folder name and "src" variable in gulpfile.js.
+
+<h3>How it works</h3>
+
+SASS/SCSS files are compiled into CSS. Both CSS and JS are minified to a partial folder before are included into PUG files (base code already started) and, finally, everything is compiled in HTML to a production and final folder.
+
+Images are compressed to a partial folder before its send to production folder. You can add other static files as HTML, PDFs, videos or images with <code>gulp statics</code>.
