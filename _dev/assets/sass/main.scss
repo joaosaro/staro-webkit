@@ -1,0 +1,15 @@
+//0-Setup
+@import "0-setup/normalize.scss";
+
+//1-base
+@import "1-base/variables.sass";
+@import "1-base/mixins.sass";
+@import "1-base/general.sass";
+@import "1-base/classes.sass";
+
+//2-modules
+@import "2-modules/header.sass";
+@import "2-modules/footer.sass";
+
+//3-pages
+@import "3-pages/home.sass";

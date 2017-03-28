@@ -1,0 +1,5 @@
+### Production
+_site
+
+### modules and config
+node_modules

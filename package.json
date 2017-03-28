@@ -1,0 +1,31 @@
+{
+  "name": "staro-webkit",
+  "version": "1.0.0",
+  "description": "Project start automate workflow by J. Saro",
+  "main": "index.js",
+  "dependencies": {
+    "del": "^2.2.2",
+    "gulp": "^3.9.1"
+  },
+  "devDependencies": {
+    "gulp-autoprefixer": "^3.1.1",
+    "gulp-plumber": "^1.1.0",
+    "gulp-pug": "^3.3.0",
+    "gulp-ruby-sass": "^2.1.1",
+    "gulp-tinypng-compress": "^1.2.1",
+    "gulp-uglify": "^2.1.2"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [
+    "gulp",
+    "npm",
+    "pug",
+    "jade",
+    "sass",
+    "scss"
+  ],
+  "author": "Joao Saro",
+  "license": "MIT"
+}
