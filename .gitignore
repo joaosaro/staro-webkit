@@ -1,4 +1,4 @@
 ### to hide
-_site
-node_modules
-.sass-cache
+build/
+node_modules/
+.sass-cache/

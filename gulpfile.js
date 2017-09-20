@@ -6,30 +6,22 @@ var gulp      = require('gulp'),
     uglify    = require('gulp-uglify'),
     tinypng   = require('gulp-tinypng-compress'),
     plumber   = require('gulp-plumber'),
-    del       = require('del');
+    del       = require('del'),
+    gutil     = require('gulp-util');
 
 //Folders Paths
-var src       = '_dev/',
-    build     = '_site/';
+var src       = 'src/',
+    build     = 'build/';
 
-//Data files with json
+/************************
+HTML, CSS, JS production
+*************************/
+
 //Json Files
 var data = {
     //Pages
     "home"      : require('./' + src + 'data/home.json')
 };
-
-// HTML - with pug
-gulp.task('pages', function buildHTML(){
-    return gulp.src(src + 'pug/pages/**/*.pug')
-    .pipe(plumber())
-    .pipe(pug({
-      locals: {
-        "_data" : data
-      }
-    }))
-    .pipe(gulp.dest(build))
-})
 
 // Styles CSS - with sass & autoprefixer
 gulp.task('styles', function(){
@@ -48,28 +40,60 @@ gulp.task('scripts', function (cb) {
     .pipe(gulp.dest(src + 'assets/min/js/'));
 });
 
+// HTML - with pug
+gulp.task('pages', ['styles', 'scripts'], function buildHTML(){
+    return gulp.src(src + 'pug/pages/**/*.pug')
+    .pipe(plumber())
+    .pipe(pug({
+      locals: {
+        "_data" : data
+      }
+    }))
+    .pipe(gulp.dest(build))
+})
+
+/************************
+Images tasks
+*************************/
+
+//If you want to use TinyPNG, change key here:
+var tinyKey = null;
+
+if (tinyKey != null) {
+  //Compress images with Tinypng
+  gulp.task('tinypng', function () {
+  	gulp.src(src + 'assets/img/**/*.{png,jpg,jpeg}')
+  		.pipe(tinypng({
+  			sigFile: 'images/.tinypng-sigs',
+  			log: true,
+        key: tinyKey
+  		}))
+  		.pipe(gulp.dest(src + 'assets/min/img/'));
+  });
+
+  //Final images task
+  gulp.task('images', ['tinypng'], function() {
+      gulp.src(src + 'assets/min/img/**/*')
+      .pipe(gulp.dest(build + 'assets/images'));
+  });
+
+} else {
+  //Final images task
+  gulp.task('images', function() {
+      gulp.src(src + 'assets/img/**/*')
+      .pipe(gulp.dest(build + 'assets/images'));
+  });
+
+}
+/************************
+Other tasks
+*************************/
+
 //Delete task
 gulp.task('del', function(done) {
   var minifiedFolder = src + 'assets/min/';
   del(build, done);
   del(minifiedFolder, done);
-});
-
-//Compress images with Tinypng
-gulp.task('tinypng', function () {
-	gulp.src(src + 'assets/img/**/*.{png,jpg,jpeg}')
-		.pipe(tinypng({
-			sigFile: 'images/.tinypng-sigs',
-			log: true
-      key: //Your Tiny png account key
-		}))
-		.pipe(gulp.dest(src + 'assets/min/img/'));
-});
-
-//Copy Images [Dev -> Prod]
-gulp.task('images', function() {
-   gulp.src(src + 'assets/min/img/**/*')
-   .pipe(gulp.dest(build + 'assets/images'));
 });
 
 //Copy other static files
@@ -78,6 +102,9 @@ gulp.task('statics', function() {
    .pipe(gulp.dest(build));
 });
 
+/************************
+default and watch tasks
+*************************/
 
 //Watch task
 gulp.task('watch', function() {
@@ -85,18 +112,14 @@ gulp.task('watch', function() {
     gulp.watch(src + 'assets/min/**/*', ['pages']);
     gulp.watch(src + 'assets/sass/**/*', ['styles']);
     gulp.watch(src + 'assets/js/**/*', ['scripts']);
-    gulp.watch(src + 'assets/img/**/*', ['tinypng']);
-    gulp.watch(src + 'assets/min/img/**/*', ['images']);
+    gulp.watch(src + 'assets/img/**/*', ['images']);
     gulp.watch(src + 'statics/**/*', ['statics']);
 })
 
 //Gulp main task
 gulp.task('default', function() {
     gulp.start([
-        'styles',
-        'scripts',
         'pages',
-        'tinypng',
         'images',
         'statics',
         'watch'
