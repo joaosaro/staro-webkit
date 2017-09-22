@@ -1,4 +1,5 @@
 ### to hide
 build/
 node_modules/
+src/assets/min/
 .sass-cache/
