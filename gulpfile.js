@@ -5,6 +5,7 @@ var gulp      = require('gulp'),
     prefix    = require('gulp-autoprefixer'),
     uglify    = require('gulp-uglify'),
     tinypng   = require('gulp-tinypng-compress'),
+    browserSync = require('browser-sync'),
     plumber   = require('gulp-plumber'),
     del       = require('del'),
     gutil     = require('gulp-util');
@@ -85,6 +86,18 @@ if (tinyKey != null) {
   });
 
 }
+
+/************************
+browserSync
+*************************/
+gulp.task('browser-sync', function() {
+    browserSync.init({
+        server: {
+            baseDir: "./" + build
+        }
+    });
+});
+
 /************************
 Other tasks
 *************************/
@@ -108,7 +121,7 @@ default and watch tasks
 
 //Watch task
 gulp.task('watch', function() {
-    gulp.watch(src + 'pug/**/*', ['pages']);
+    gulp.watch(src + 'pug/**/*', ['pages', browserSync.reload]);
     gulp.watch(src + 'assets/min/**/*', ['pages']);
     gulp.watch(src + 'assets/sass/**/*', ['styles']);
     gulp.watch(src + 'assets/js/**/*', ['scripts']);
@@ -122,6 +135,7 @@ gulp.task('default', function() {
         'pages',
         'images',
         'statics',
-        'watch'
+        'watch',
+        'browser-sync'
     ]);
 });

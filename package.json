@@ -8,6 +8,7 @@
     "gulp": "^3.9.1"
   },
   "devDependencies": {
+    "browser-sync": "^2.18.13",
     "gulp-autoprefixer": "^3.1.1",
     "gulp-plumber": "^1.1.0",
     "gulp-pug": "^3.3.0",
