@@ -1,1 +1,1 @@
-console.log("Hello and it's working!");
+console.log("Hello and welcome to Staro Webkit! Yeah, you should delete this annoying log... :D");
